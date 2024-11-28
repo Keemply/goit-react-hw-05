@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
-function MovieList({ movies }) {
+function MovieList({ movies, location }) {
   return (
     <ul>
       {movies.results.map((movie) => {
-        console.log("MovieList:", movie);
         return (
           <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+            <Link to={`/movies/${movie.id}`} state={location}>
+              {movie.title}
+            </Link>
           </li>
         );
       })}

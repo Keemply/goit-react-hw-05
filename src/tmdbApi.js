@@ -4,22 +4,19 @@ axios.defaults.headers.common["Authorization"] =
 axios.defaults.baseURL = "https://api.themoviedb.org/3";
 export const getTrendMovies = async () => {
   const result = await axios("/trending/movie/day?language=en-US'");
-  console.log(result);
+
   return result.data;
 };
 export const getMovieDetails = async (id) => {
   const result = await axios(`/movie/${id}`);
-  console.log(result);
   return result.data;
 };
 export const getMovieCredits = async (id) => {
   const result = await axios(`/movie/${id}/credits`);
-  console.log(result);
   return result.data;
 };
 export const getMovieReviews = async (id) => {
   const result = await axios(`/movie/${id}/reviews`);
-  console.log(result);
   return result.data;
 };
 export const searchMovie = async (searchQ) => {
@@ -28,6 +25,5 @@ export const searchMovie = async (searchQ) => {
       query: searchQ,
     },
   });
-  console.log(result);
   return result.data;
 };

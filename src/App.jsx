@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { useEffect, useState } from "react";
 import { getTrendMovies } from "./tmdbApi";
@@ -15,20 +15,28 @@ const MovieReviews = lazy(() =>
 
 function App() {
   const [trendMovies, setTrendMovies] = useState(null);
+  const location = useLocation();
+
   useEffect(() => {
+    if (location.pathname !== "/") {
+      return;
+    }
     async function wrapper() {
       const movies = await getTrendMovies();
       setTrendMovies(movies);
     }
     wrapper();
-  }, []);
+  }, [location]);
 
   return (
     <div>
       <Navigation />
       <Suspense fallback={<div>Loading page...</div>}>
         <Routes>
-          <Route path="/" element={<HomePage trendMovies={trendMovies} />} />
+          <Route
+            path="/"
+            element={<HomePage trendMovies={trendMovies} location={location} />}
+          />
           <Route path="/movies" element={<MoviesPage />} />
           <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
             <Route path="cast" element={<MovieCast />} />
